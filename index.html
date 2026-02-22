@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexora — AI Assistant Platform</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="components.css" />
+  <link rel="stylesheet" href="sections.css" />
+  <link rel="stylesheet" href="animations.css" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Noise overlay -->
+  <canvas id="noise-canvas"></canvas>
+
+  <!-- ═══════════════════════════════════
+       NAV
+  ═══════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-mark">N</span>
+        <span class="logo-text">nexora</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon-dark">☽</span>
+          <span class="theme-icon-light">○</span>
+        </button>
+        <a href="#demo" class="btn btn-outline btn-sm">See Demo</a>
+        <a href="#pricing" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#demo">Demo</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#pricing" class="btn btn-primary w-full mt-16">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       HERO
+  ═══════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-badge reveal-up">
+        <span class="badge-dot"></span>
+        Live · 10,000+ appointments automated daily
+      </div>
+      <h1 class="hero-title reveal-up" style="animation-delay:.1s">
+        Your AI assistant<br/>
+        <span class="gradient-text">that never</span><br/>
+        misses a beat.
+      </h1>
+      <p class="hero-sub reveal-up" style="animation-delay:.2s">
+        Voice calls + WhatsApp automation for appointments,<br class="hide-sm"/>
+        reminders, invoicing, and customer delight — 24/7.
+      </p>
+      <div class="hero-ctas reveal-up" style="animation-delay:.3s">
+        <a href="#demo" class="btn btn-primary btn-lg magnetic">
+          <span>Watch it work</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#features" class="btn btn-ghost btn-lg magnetic">Explore features</a>
+      </div>
+      <div class="hero-stats reveal-up" style="animation-delay:.4s">
+        <div class="hstat"><span class="hstat-num" data-count="99.8">0</span><span class="hstat-unit">%</span><div class="hstat-label">Accuracy</div></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-num" data-count="10">0</span><span class="hstat-unit">K+</span><div class="hstat-label">Daily Bookings</div></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-num" data-count="24">0</span><span class="hstat-unit">/7</span><div class="hstat-label">Availability</div></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-num" data-count="12">0</span><span class="hstat-unit">+</span><div class="hstat-label">Languages</div></div>
+      </div>
+    </div>
+
+    <!-- Floating chat preview -->
+    <div class="hero-float-chat reveal-up" style="animation-delay:.5s" id="float-chat">
+      <div class="fc-header">
+        <div class="fc-avatar">N</div>
+        <div>
+          <div class="fc-name">Nexora</div>
+          <div class="fc-status"><span class="online-dot"></span>Online now</div>
+        </div>
+      </div>
+      <div class="fc-messages" id="fc-messages">
+        <div class="fc-msg bot">Hello! I can book your appointment in seconds. What date works?</div>
+      </div>
+      <div class="fc-input-row">
+        <input type="text" class="fc-input" id="fc-input" placeholder="Type a message…" />
+        <button class="fc-send" id="fc-send">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PROBLEM → SOLUTION
+  ═══════════════════════════════════ -->
+  <section id="problem" class="section">
+    <div class="container">
+      <div class="section-label scroll-reveal">The old way vs the Nexora way</div>
+      <h2 class="section-title scroll-reveal">Stop losing customers<br/>to manual chaos.</h2>
+      <div class="vs-grid">
+        <div class="vs-card vs-bad scroll-reveal">
+          <div class="vs-tag vs-tag-bad">Before</div>
+          <ul class="vs-list">
+            <li>📵 Missed calls after hours</li>
+            <li>📅 Double-booked appointments</li>
+            <li>🔁 Manual follow-up calls & SMS</li>
+            <li>📊 Excel sheets updated by hand</li>
+            <li>🗣️ Staff overwhelmed with FAQs</li>
+            <li>💸 Revenue lost to no-shows</li>
+          </ul>
+        </div>
+        <div class="vs-divider scroll-reveal">
+          <div class="vs-arrow">→</div>
+        </div>
+        <div class="vs-card vs-good scroll-reveal">
+          <div class="vs-tag vs-tag-good">With Nexora</div>
+          <ul class="vs-list">
+            <li>✅ 24/7 AI voice + WhatsApp agent</li>
+            <li>✅ Smart conflict-free scheduling</li>
+            <li>✅ Automated reminder calls & SMS</li>
+            <li>✅ Auto-export to Excel & CRM</li>
+            <li>✅ Instant FAQ resolution</li>
+            <li>✅ Zero no-shows with smart nudges</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FEATURES
+  ═══════════════════════════════════ -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-label scroll-reveal">What Nexora does</div>
+      <h2 class="section-title scroll-reveal">Five capabilities.<br/>One intelligent platform.</h2>
+      <div class="features-grid">
+
+        <div class="feat-card feat-card-large scroll-reveal magnetic-card" data-delay="0">
+          <div class="feat-icon">🎙️</div>
+          <h3>Voice Agent</h3>
+          <p>Human-like multilingual voice AI with emotion detection, regional accent support, and real-time customer history recall. Greets callers by name.</p>
+          <div class="feat-tags">
+            <span>12+ Languages</span><span>Emotion AI</span><span>Accent Adapt</span>
+          </div>
+          <div class="feat-glow"></div>
+        </div>
+
+        <div class="feat-card scroll-reveal magnetic-card" data-delay="80">
+          <div class="feat-icon">💬</div>
+          <h3>WhatsApp Bot</h3>
+          <p>Same intelligence, text format. Customers book, cancel, and get answers 24/7 on the app they already use.</p>
+          <div class="feat-tags"><span>Auto-Reply</span><span>Booking</span></div>
+          <div class="feat-glow"></div>
+        </div>
+
+        <div class="feat-card scroll-reveal magnetic-card" data-delay="160">
+          <div class="feat-icon">📅</div>
+          <h3>Smart Scheduling</h3>
+          <p>Google Calendar sync with real-time conflict detection, optimal slot suggestions, and multi-step reminders.</p>
+          <div class="feat-tags"><span>No Double-Books</span><span>Auto-Remind</span></div>
+          <div class="feat-glow"></div>
+        </div>
+
+        <div class="feat-card scroll-reveal magnetic-card" data-delay="240">
+          <div class="feat-icon">🧠</div>
+          <h3>Customer Memory</h3>
+          <p>Recognizes every caller by phone number. Pulls up their name, preferences, appointment history, and past invoices instantly.</p>
+          <div class="feat-tags"><span>CRM Sync</span><span>360° View</span></div>
+          <div class="feat-glow"></div>
+        </div>
+
+        <div class="feat-card scroll-reveal magnetic-card" data-delay="320">
+          <div class="feat-icon">🧾</div>
+          <h3>Auto Invoicing</h3>
+          <p>Generate and send invoices after every appointment. Track payments. Export everything to Excel or your CRM automatically.</p>
+          <div class="feat-tags"><span>Excel Export</span><span>Payment Track</span></div>
+          <div class="feat-glow"></div>
+        </div>
+
+        <div class="feat-card feat-card-accent scroll-reveal" data-delay="400">
+          <div class="feat-accent-inner">
+            <div class="feat-icon">📊</div>
+            <h3>Live Analytics</h3>
+            <p>Real-time admin dashboard showing sentiment scores, inquiry patterns, peak hours, and business insights — all in one view.</p>
+            <a href="#pricing" class="btn btn-primary btn-sm mt-16">Start free trial</a>
+          </div>
+          <div class="feat-glow"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       HOW IT WORKS
+  ═══════════════════════════════════ -->
+  <section id="how" class="section">
+    <div class="container">
+      <div class="section-label scroll-reveal">Simple setup</div>
+      <h2 class="section-title scroll-reveal">Live in 3 steps.</h2>
+      <div class="steps-wrap">
+        <div class="step scroll-reveal" data-delay="0">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>Connect your channels</h3>
+            <p>Link your phone number, WhatsApp Business account, and Google Calendar. Takes under 10 minutes with our guided setup.</p>
+          </div>
+        </div>
+        <div class="step-line scroll-reveal"></div>
+        <div class="step scroll-reveal" data-delay="100">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>Train your agent</h3>
+            <p>Upload your FAQs, service list, and pricing. Nexora learns your business voice and starts responding naturally in any language.</p>
+          </div>
+        </div>
+        <div class="step-line scroll-reveal"></div>
+        <div class="step scroll-reveal" data-delay="200">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>Go live & grow</h3>
+            <p>Your AI agent handles calls, chats, bookings, reminders, and invoices — while you watch the analytics dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       DEMO
+  ═══════════════════════════════════ -->
+  <section id="demo" class="section">
+    <div class="container">
+      <div class="section-label scroll-reveal">See it live</div>
+      <h2 class="section-title scroll-reveal">Try Nexora right now.</h2>
+      <div class="demo-grid">
+
+        <!-- WhatsApp chat demo -->
+        <div class="demo-card scroll-reveal">
+          <div class="demo-card-label">WhatsApp Bot</div>
+          <div class="demo-chat" id="demo-chat">
+            <div class="dc-msg bot">👋 Hi! I'm Nexora. How can I help you today?</div>
+            <div class="dc-suggestions">
+              <button class="dc-chip" onclick="demoReply('Book an appointment')">Book appointment</button>
+              <button class="dc-chip" onclick="demoReply('Check my booking')">Check booking</button>
+              <button class="dc-chip" onclick="demoReply('Cancel my slot')">Cancel slot</button>
+            </div>
+          </div>
+          <div class="demo-input-row">
+            <input class="demo-input" id="demo-input" placeholder="Send a message…" onkeydown="if(event.key==='Enter')sendDemo()" />
+            <button class="demo-send" onclick="sendDemo()">→</button>
+          </div>
+        </div>
+
+        <!-- Voice agent demo -->
+        <div class="demo-card scroll-reveal" style="animation-delay:.15s">
+          <div class="demo-card-label">Voice Agent</div>
+          <div class="voice-demo">
+            <div class="voice-avatar" id="voice-avatar">N</div>
+            <div class="voice-waves" id="voice-waves">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p id="voice-text" class="voice-text">"Hello! This is Nexora. How can I assist you today?"</p>
+            <button class="btn btn-primary mt-20" id="voice-btn" onclick="toggleVoice()">
+              ▶ Play sample
+            </button>
+            <div class="voice-transcript" id="voice-transcript"></div>
+          </div>
+        </div>
+
+        <!-- Calendar preview -->
+        <div class="demo-card scroll-reveal" style="animation-delay:.3s">
+          <div class="demo-card-label">Smart Calendar</div>
+          <div class="cal-demo">
+            <div class="cal-header">
+              <span class="cal-month">February 2026</span>
+            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+            <div class="cal-legend">
+              <span class="cal-dot booked"></span>Booked
+              <span class="cal-dot available"></span>Available
+              <span class="cal-dot ai"></span>AI Suggested
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SOCIAL PROOF
+  ═══════════════════════════════════ -->
+  <section id="proof" class="section">
+    <div class="container">
+      <div class="section-label scroll-reveal">Trusted by teams</div>
+      <h2 class="section-title scroll-reveal">What our customers say.</h2>
+      <div class="testimonials-track scroll-reveal">
+        <div class="testimonials-inner" id="testimonials-inner">
+
+          <div class="tcard">
+            <div class="tcard-stars">★★★★★</div>
+            <p>"Nexora cut our no-shows by 60% in the first month. The WhatsApp bot handles 80% of bookings without any human intervention."</p>
+            <div class="tcard-author">
+              <div class="tcard-av">R</div>
+              <div><strong>Riya Mehta</strong><br/><span>Founder, Bloom Wellness Clinic</span></div>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="tcard-stars">★★★★★</div>
+            <p>"The voice agent speaks better Hindi than my receptionist. Our customers think they're talking to a real person — and they love it."</p>
+            <div class="tcard-author">
+              <div class="tcard-av">A</div>
+              <div><strong>Arjun Kapoor</strong><br/><span>Director, AK Events & Hospitality</span></div>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="tcard-stars">★★★★★</div>
+            <p>"Auto-invoicing alone saved us 4 hours a day. When I saw the Excel exports populating in real-time I was genuinely shocked."</p>
+            <div class="tcard-author">
+              <div class="tcard-av">S</div>
+              <div><strong>Sneha Rao</strong><br/><span>Operations Lead, Nexgen Call Centre</span></div>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="tcard-stars">★★★★★</div>
+            <p>"Setup took 8 minutes. Within an hour Nexora was booking appointments in English, Tamil, and Kannada. Absolutely wild technology."</p>
+            <div class="tcard-author">
+              <div class="tcard-av">K</div>
+              <div><strong>Karthik Nair</strong><br/><span>CEO, Karthik IT Solutions</span></div>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="tcard-stars">★★★★★</div>
+            <p>"Our customers feel remembered and valued. Nexora knows their history and greets them by name — it's the personal touch at AI scale."</p>
+            <div class="tcard-author">
+              <div class="tcard-av">P</div>
+              <div><strong>Priya Iyer</strong><br/><span>Owner, Priya's Salon Chain</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="testimonials-nav scroll-reveal">
+        <button class="tnav-btn" id="tnav-prev">←</button>
+        <div class="tnav-dots" id="tnav-dots"></div>
+        <button class="tnav-btn" id="tnav-next">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PRICING
+  ═══════════════════════════════════ -->
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="section-label scroll-reveal">Simple pricing</div>
+      <h2 class="section-title scroll-reveal">Start free. Scale as you grow.</h2>
+      <div class="pricing-grid">
+
+        <div class="price-card scroll-reveal" data-delay="0">
+          <div class="price-tier">Starter</div>
+          <div class="price-amount"><span class="price-curr">₹</span>0<span class="price-per">/mo</span></div>
+          <p class="price-desc">Perfect for freelancers and solo service providers.</p>
+          <ul class="price-features">
+            <li>✓ 100 AI conversations/month</li>
+            <li>✓ WhatsApp bot</li>
+            <li>✓ Google Calendar sync</li>
+            <li>✓ 2 languages</li>
+            <li class="dim">✗ Voice agent</li>
+            <li class="dim">✗ Auto-invoicing</li>
+          </ul>
+          <a href="#" class="btn btn-outline w-full">Get started free</a>
+        </div>
+
+        <div class="price-card price-card-pro scroll-reveal" data-delay="100">
+          <div class="price-badge">Most Popular</div>
+          <div class="price-tier">Growth</div>
+          <div class="price-amount"><span class="price-curr">₹</span>2,999<span class="price-per">/mo</span></div>
+          <p class="price-desc">For SMEs and growing service businesses.</p>
+          <ul class="price-features">
+            <li>✓ Unlimited conversations</li>
+            <li>✓ Voice + WhatsApp agent</li>
+            <li>✓ Smart scheduling & reminders</li>
+            <li>✓ Auto-invoicing & Excel export</li>
+            <li>✓ Customer memory (CRM)</li>
+            <li>✓ 12+ languages</li>
+          </ul>
+          <a href="#" class="btn btn-primary w-full">Start 14-day trial</a>
+        </div>
+
+        <div class="price-card scroll-reveal" data-delay="200">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-amount"><span class="price-curr">₹</span>9,999<span class="price-per">/mo</span></div>
+          <p class="price-desc">For call centres, enterprise teams, and high-volume needs.</p>
+          <ul class="price-features">
+            <li>✓ Everything in Growth</li>
+            <li>✓ Custom voice persona/accent</li>
+            <li>✓ Live sentiment dashboard</li>
+            <li>✓ CRM + payment integrations</li>
+            <li>✓ Voice biometric auth</li>
+            <li>✓ Dedicated account manager</li>
+          </ul>
+          <a href="#" class="btn btn-outline w-full">Contact sales</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       CTA STRIP
+  ═══════════════════════════════════ -->
+  <section id="cta-strip" class="section">
+    <div class="container">
+      <div class="cta-box scroll-reveal">
+        <div class="cta-orb"></div>
+        <div class="section-label" style="justify-content:center">Ready to automate?</div>
+        <h2 class="cta-title">Your AI agent is<br/><span class="gradient-text">10 minutes away.</span></h2>
+        <p class="cta-sub">No credit card. No setup fees. Cancel anytime.</p>
+        <div class="hero-ctas">
+          <a href="#pricing" class="btn btn-primary btn-lg magnetic">Start free trial</a>
+          <a href="#demo" class="btn btn-ghost btn-lg magnetic">Watch demo first</a>
+        </div>
+        <div class="trust-badges">
+          <span>🔒 GDPR Ready</span>
+          <span>🛡️ ISO 27001</span>
+          <span>⚡ 99.98% Uptime</span>
+          <span>🌐 12+ Languages</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
+  <footer id="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:12px">
+          <span class="logo-mark">N</span>
+          <span class="logo-text">nexora</span>
+        </div>
+        <p>The AI assistant platform for modern service businesses. Voice + WhatsApp, all in one.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="WhatsApp">📱</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col">
+          <div class="fl-title">Product</div>
+          <a href="#features">Features</a>
+          <a href="#how">How it works</a>
+          <a href="#demo">Demo</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+        <div class="fl-col">
+          <div class="fl-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="fl-col">
+          <div class="fl-title">Legal</div>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span>© 2026 Nexora. All rights reserved.</span>
+        <span>Built with ♥ for SMEs worldwide.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="theme.js"></script>
+  <script src="cursor.js"></script>
+  <script src="animations.js"></script>
+  <script src="demo.js"></script>
+  <script src="noise.js"></script>
+  <script src="fx.js"></script>
+
+</body>
+</html>

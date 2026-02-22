@@ -1,0 +1,164 @@
+/* ═══════════════════════════════════════════════
+   animations.css — All animation definitions (v2)
+═══════════════════════════════════════════════ */
+
+/* ── Hero reveal (badge, sub, ctas) ── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: revealUp 0.65s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Word-clip swoosh container ──
+   The parent clips overflow so words
+   appear to rise UP from below the line */
+.word-clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* tiny breathing room so descenders don't clip */
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.word-inner {
+  display: inline-block;
+  will-change: transform, opacity;
+  /* starts hidden below — anime.js sets translateY(110%) */
+}
+
+/* ── Scroll reveal (non-title elements) ── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.25,0.46,0.45,0.94),
+              transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* stagger delays */
+.scroll-reveal[data-delay="80"]  { transition-delay: 80ms; }
+.scroll-reveal[data-delay="100"] { transition-delay: 100ms; }
+.scroll-reveal[data-delay="160"] { transition-delay: 160ms; }
+.scroll-reveal[data-delay="200"] { transition-delay: 200ms; }
+.scroll-reveal[data-delay="240"] { transition-delay: 240ms; }
+.scroll-reveal[data-delay="300"] { transition-delay: 300ms; }
+.scroll-reveal[data-delay="320"] { transition-delay: 320ms; }
+.scroll-reveal[data-delay="400"] { transition-delay: 400ms; }
+
+/* ── Section title — starts invisible, anime.js reveals ── */
+.section-title {
+  will-change: transform, opacity;
+}
+
+/* ── Feature card 3D tilt ── */
+.features-grid {
+  perspective: 1400px;
+}
+.feat-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ── Feat glow (repositioned by JS) ── */
+.feat-glow {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(22px);
+  z-index: 0;
+  transition: opacity 0.3s;
+}
+
+/* ── Ambient particle canvas in hero ── */
+#hero canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ── Hero orb drift ── */
+.hero-orb-1 { animation: orb1 14s ease-in-out infinite; }
+.hero-orb-2 { animation: orb2 18s ease-in-out infinite; }
+@keyframes orb1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(50px,35px) scale(1.1); }
+}
+@keyframes orb2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(-35px,-25px) scale(1.06); }
+}
+
+/* ── Floating chat widget ── */
+.hero-float-chat {
+  animation: floatChat 8s ease-in-out infinite;
+}
+@keyframes floatChat {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-14px); }
+}
+
+/* ── Online dot pulse ── */
+.online-dot, .badge-dot {
+  animation: pulseDot 2.2s ease infinite;
+}
+@keyframes pulseDot {
+  0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,.45); }
+  60%      { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+
+/* ── Counter pop ── */
+.hstat-num.counted {
+  animation: counterPop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes counterPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ── Ripple overflow ── */
+.btn-primary { overflow: hidden; }
+
+/* ── Spotlight + card overflow ── */
+.price-card, .tcard, .demo-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Step numbers start hidden (anime.js reveals) ── */
+.step-num {
+  will-change: transform, opacity;
+}
+
+/* ── VS cards perspective ── */
+.vs-grid { perspective: 1000px; }
+.vs-card { will-change: transform; }
+
+/* ── Logo mark 3D flip ── */
+.logo-mark { will-change: transform, box-shadow; }
+
+/* ── Scroll progress bar shimmer ── */
+@keyframes progressShimmer {
+  0%,100% { box-shadow: 0 0 8px rgba(59,130,246,0.6); }
+  50%      { box-shadow: 0 0 18px rgba(99,102,241,0.9); }
+}
+
+/* ── Global smooth transitions for theme ── */
+html { transition: color-scheme 0.3s; }
+
+/* Scoped — only theme-sensitive props, not transforms */
+.card, .feat-card, .tcard, .price-card, nav, footer {
+  transition-property: background-color, border-color, box-shadow, color;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.25,0.46,0.45,0.94);
+}
